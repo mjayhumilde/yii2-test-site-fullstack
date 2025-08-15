@@ -1,60 +1,87 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+# My Portfolio: A Project-Based Learning Experience (Yii2 Advanced Template)
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](https://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+This is a personal portfolio website created as a side project to learn **Yii2 PHP framework**. The project is specifically designed to provide hands-on experience with the core technologies used at my internship:
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+- **Yii2 Framework:** Understanding the Model-View-Controller (MVC) architecture and its core components.
+- **SQL Database:** Gaining practical experience with database design, data storage, and interaction.
+- **Gii Code Generator:** Utilizing Yii2's powerful code generator to rapidly build and manage models, views, and controllers, which accelerates development and reinforces best practices.
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+By building this project, I am focusing on a practical application of these technologies to create a functional, modern website with a separation of concerns for the frontend and a secure backend.
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
+---
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![build](https://github.com/yiisoft/yii2-app-advanced/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-advanced/actions?query=workflow%3Abuild)
+## ⚙️ Project Features and Database Schema
 
-DIRECTORY STRUCTURE
--------------------
+The project includes a full **CRUD** (Create, Read, Update, Update, Delete) implementation for managing a portfolio. The database schema, visible in phpMyAdmin, consists of the following key tables:
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+- **`file`**: Manages uploaded files.
+- **`migration`**: Tracks database changes.
+- **`project`**: Stores portfolio project details.
+- **`project_image`**: Stores images associated with projects.
+- **`testimonial`**: Manages testimonials or endorsements.
+- **`user`**: Handles user authentication and management for the backend.
+
+The **`user`** table is used for securing the admin panel where the other tables' data can be managed.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** **Yii2**
+- **Backend:** **PHP**
+- **Frontend:** **HTML**, **CSS** (Bootstrap 5)
+- **Database:** **SQL** (e.g., MySQL)
+
+---
+
+## 📦 Installation
+
+Follow these steps to get a local copy of the project up and running.
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+    cd your-repo-name
+    ```
+
+2.  **Initialize the project:**
+
+    ```bash
+    php init
+    ```
+
+    Choose the `Development` environment and confirm the initialization.
+
+3.  **Install Composer dependencies:**
+
+    ```bash
+    composer install
+    ```
+
+4.  **Configure the database:**
+
+    - Create a new **SQL** database named `portfolio`.
+    - Update the database connection details in **`common/config/main-local.php`**.
+    - Run database migrations to create the necessary tables.
+
+    ```bash
+    php yii migrate
+    ```
+
+5.  **Set up the web server:**
+    - Point the document root for your frontend to the **`frontend/web`** directory.
+    - Point the document root for your backend to the **`backend/web`** directory.
+    - Ensure pretty URLs are enabled in your web server configuration for both applications.
+
+---
+
+## 🤝 Contributing
+
+This project is a personal portfolio. However, if you find any issues or have suggestions, feel free to open an issue.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.
