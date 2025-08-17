@@ -11,8 +11,8 @@ use Yii;
  * @property string $name
  * @property string $tech_stack
  * @property string $description
- * @property int $start_date
- * @property int|null $end_date
+ * @property string|null $start_date
+ * @property string|null $end_date
  *
  * @property ProjectImage[] $projectImages
  * @property Testimonial[] $testimonials
@@ -35,9 +35,9 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['end_date'], 'default', 'value' => null],
-            [['name', 'tech_stack', 'description', 'start_date'], 'required'],
-            [['start_date', 'end_date'], 'integer'],
+            [['start_date', 'end_date'], 'default', 'value' => null],
+            [['name', 'tech_stack', 'description'], 'required'],
+            [['start_date', 'end_date'], 'safe'],
             [['name', 'tech_stack', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -60,7 +60,7 @@ class Project extends \yii\db\ActiveRecord
     /**
      * Gets query for [[ProjectImages]].
      *
-     * @return \yii\db\ActiveQuery|ProjectImageQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getProjectImages()
     {
@@ -70,7 +70,7 @@ class Project extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Testimonials]].
      *
-     * @return \yii\db\ActiveQuery|TestimonialQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getTestimonials()
     {
@@ -85,4 +85,5 @@ class Project extends \yii\db\ActiveRecord
     {
         return new ProjectQuery(get_called_class());
     }
+
 }
