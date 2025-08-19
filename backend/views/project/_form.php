@@ -20,13 +20,11 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
-        'dateFormat' => 'yyyy-MM-dd',
         // so that the user cannont manually enter a date
         'options' => ['readOnly' => true],
     ]) ?>
 
     <?= $form->field($model, 'end_date')->widget(\yii\jui\DatePicker::classname(), [
-        'dateFormat' => 'yyyy-MM-dd',
         // so that the user cannont manually enter a date
         'options' => ['readOnly' => true],
     ]) ?>
