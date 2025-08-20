@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\project;
 use backend\models\ProjectSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -71,6 +72,7 @@ class ProjectController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash(key: 'success', value: 'Successfully Saved!');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -94,6 +96,8 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash(key: 'success', value: 'Successfully Updpated!');
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
