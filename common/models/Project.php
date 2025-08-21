@@ -20,6 +20,7 @@ use Yii;
 class Project extends \yii\db\ActiveRecord
 {
 
+    public $imageFile;
 
     /**
      * {@inheritdoc}
@@ -39,6 +40,7 @@ class Project extends \yii\db\ActiveRecord
             [['name', 'tech_stack', 'description'], 'required'],
             [['start_date', 'end_date'], 'safe'],
             [['name', 'tech_stack', 'description'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg']
         ];
     }
 
@@ -86,4 +88,23 @@ class Project extends \yii\db\ActiveRecord
         return new ProjectQuery(get_called_class());
     }
 
+    public function saveImage()
+    {
+        Yii::$app->db->transaction(function ($db) {
+            $file = new File();
+            $file->name = uniqid(true) . '.' . $this->imageFile->extension;
+            $file->base_url = Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->params['uploads']['projects']);
+            $file->mime_type = mime_content_type($this->imageFile->tempName);
+            $file->save();
+
+            $projectImage = new ProjectImage();
+            $projectImage->project_id = $this->id;
+            $projectImage->file_id = $file->id;
+            $projectImage->save();
+
+            if (!$this->imageFile->saveAs(file: Yii::$app->params['uploads']['projects'] . '/' . $file->name)) {
+                $db->transaction->rollBack();
+            };
+        });
+    }
 }

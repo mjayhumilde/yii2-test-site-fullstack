@@ -8,6 +8,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProjectController implements the CRUD actions for project model.
@@ -23,7 +24,7 @@ class ProjectController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -66,13 +67,20 @@ class ProjectController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+
     public function actionCreate()
     {
         $model = new project();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash(key: 'success', value: 'Successfully Saved!');
+            $model->load($this->request->post());
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            // Check if the model is valid and can be saved
+            if ($model->save()) {
+                $model->saveImage();
+
+                Yii::$app->session->setFlash('success', 'Successfully Saved!');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -96,7 +104,7 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash(key: 'success', value: 'Successfully Updpated!');
+            Yii::$app->session->setFlash('success', 'Successfully Updated!');
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
