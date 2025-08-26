@@ -36,6 +36,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, attribute: 'imageFile')->fileInput() ?>
 
+    <?php foreach ($model->images as $image): ?>
+        <?= Html::img($image->file->absoluteUrl(), [
+            'alt' => 'Demonstration of the user interface',
+            'heaight' => 200,
+        ]) ?>
+    <?php endforeach; ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
