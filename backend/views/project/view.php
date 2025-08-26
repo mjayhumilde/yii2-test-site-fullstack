@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Project;
 
 /** @var yii\web\View $this */
 /** @var common\models\project $model */
@@ -31,6 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
+            [
+                'label' => Yii::t('app', 'Images'),
+                'format' => 'raw',
+                'value' => function ($model) {
+                    /** @var $model \common\models\Project */
+                    if (!$model->hasImages()) {
+                        return null;
+                    } else {
+                        $imagesHtml = '';
+
+                        foreach ($model->images as $image) {
+                            $imagesHtml .= Html::img(
+                                $image->file->absoluteUrl(),
+                                [
+                                    'alt' => 'Demonstration of the user interface'
+                                ]
+                            );
+                        }
+                        return $imagesHtml;
+                    }
+                }
+            ],
             'tech_stack:raw',
             'description:raw',
             'start_date',
