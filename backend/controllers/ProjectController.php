@@ -103,10 +103,19 @@ class ProjectController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Successfully Updated!');
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->load($this->request->post());
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save()) {
+                $model->saveImage();
+
+                Yii::$app->session->setFlash('success', 'Successfully Updated!');
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $model->loadDefaultValues();
+            }
         }
 
         return $this->render('update', [

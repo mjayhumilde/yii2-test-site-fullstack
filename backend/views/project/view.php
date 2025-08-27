@@ -46,7 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             $imagesHtml .= Html::img(
                                 $image->file->absoluteUrl(),
                                 [
-                                    'alt' => 'Demonstration of the user interface'
+                                    'alt' => 'Demonstration of the user interface',
+                                    'height' => 200,
+                                    'class' => 'project-view__image'
                                 ]
                             );
                         }

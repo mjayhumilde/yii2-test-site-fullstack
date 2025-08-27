@@ -40,6 +40,7 @@ use yii\widgets\ActiveForm;
         <?= Html::img($image->file->absoluteUrl(), [
             'alt' => 'Demonstration of the user interface',
             'heaight' => 200,
+            'class' => 'project-view__image'
         ]) ?>
     <?php endforeach; ?>
 
