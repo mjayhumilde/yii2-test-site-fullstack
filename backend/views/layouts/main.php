@@ -47,6 +47,7 @@ AppAsset::register($this);
             // Add menu items for logged-in users here
             // Yii::t function for translation best practice
             $menuItems[] = ['label' => Yii::t(category: 'app', message: 'Projects'), 'url' => ['/project/index']];
+            $menuItems[] = ['label' => Yii::t(category: 'app', message: 'BLogs'), 'url' => ['/blog/index']];
             $menuItems[] = [
                 'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                 'url' => ['/site/logout'],

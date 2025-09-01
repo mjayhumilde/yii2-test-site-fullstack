@@ -1,0 +1,87 @@
+<?php
+
+namespace common\models;
+
+use Yii;
+use yii\web\UploadedFile;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+
+/**
+ * This is the model class for table "blog".
+ */
+class Blog extends ActiveRecord
+{
+    /**
+     * @var UploadedFile
+     */
+    public $imageFile;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'blog';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['title', 'description'], 'required'],
+            [['description'], 'string'],
+            [['title'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'title' => 'Blog Title',
+            'description' => 'Description',
+            'image_cover' => 'Image Cover',
+            'imageFile' => 'Upload Blog Cover Image',
+        ];
+    }
+
+    /**
+     * Saves the uploaded image file.
+     * @return bool whether the file was uploaded successfully
+     */
+    // In common/models/Blog.php
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $imageName = uniqid(true) . '.' . $this->imageFile->extension;
+            $imagePath = Yii::getAlias('@backend/web/uploads/blog_covers/') . $imageName;
+
+            if ($this->imageFile->saveAs($imagePath)) {
+                // Add a leading slash to make the URL absolute from the web root
+                $this->image_cover = '/uploads/blog_covers/' . $imageName;
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+}
