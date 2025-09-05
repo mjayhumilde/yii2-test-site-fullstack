@@ -38,13 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \yii\helpers\StringHelper::truncateWords($model->description, 20);
                 },
             ],
-            [
-                'attribute' => 'image_cover',
-                'format' => 'html',
-                'value' => function ($model) {
-                    return Html::img($model->image_cover, ['style' => 'width: 100px;']);
-                },
-            ],
+            // [
+            //     'attribute' => 'image_cover',
+            //     'format' => 'html',
+            //     'value' => function ($model) {
+            //         return Html::img($model->image_cover, ['style' => 'width: 100px;']);
+            //     },
+            // ],
             'created_at:datetime',
             [
                 'class' => ActionColumn::class,

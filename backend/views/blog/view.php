@@ -32,11 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            [
-                'attribute' => 'image_cover',
-                'value' => Yii::$app->request->baseUrl . $model->image_cover,
-                'format' => ['image', ['width' => '200']],
-            ],
+            // [
+            //     'attribute' => 'image_cover',
+            //     'value' => Yii::$app->request->baseUrl . $model->image_cover,
+            //     'format' => ['image', ['width' => '200']],
+            // ],
             [
                 'attribute' => 'description',
                 'format' => 'html',
