@@ -81,11 +81,12 @@ class Blog extends ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
+            // Use the frontend accessible path
             $imageName = uniqid(true) . '.' . $this->imageFile->extension;
-            $imagePath = Yii::getAlias('@backend/web/uploads/blog_covers/') . $imageName;
+            $imagePath = Yii::getAlias('@frontend/web/uploads/blog_covers/') . $imageName;
 
             if ($this->imageFile->saveAs($imagePath)) {
-                // Add a leading slash to make the URL absolute from the web root
+                // Save the relative URL for the frontend to access the image
                 $this->image_cover = '/uploads/blog_covers/' . $imageName;
                 return true;
             } else {

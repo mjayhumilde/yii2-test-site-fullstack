@@ -18,9 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($blogs as $blog): ?>
                     <div class="row me-lg-4">
                         <div class="card border-0 shadow rounded-0 p-0">
-                            <img
-                                src="<?= Html::encode($blog->image_cover) ?>"
-                                alt="" class="card-img-top rounded-0" />
+                            <img src="<?= Url::to('@web/' . Html::encode($blog->image_cover)) ?>" alt="Blog Image" class="card-img-top rounded-0" />
                             <div class="card-body">
                                 <h5 class="card-title"><?= Html::encode($blog->title) ?></h5>
                                 <div class="d-flex gap-3 text-muted" style="font-size: 12px">
