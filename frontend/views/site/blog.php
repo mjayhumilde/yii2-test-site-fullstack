@@ -7,6 +7,46 @@ use yii\helpers\Url;
 
 $this->title = 'Blog';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile('@web/css/summernote.min.css');
+$this->registerCss("
+    .card-text {
+        max-height: 100px; /* You can adjust the max height as per your need */
+        overflow: hidden; /* Hides overflow content */
+        position: relative;
+    }
+    .card-text img {
+        max-width: 100%; /* Ensures images are responsive and fit inside the container */
+        height: auto;
+    }
+");
+$this->registerCss("
+    .card-img-top {
+        width: 100%; /* Ensures the image takes the full width of the container */
+        object-fit: cover;  /* Ensures the image covers the space while maintaining aspect ratio */
+    }
+
+    /* For screens below 600px */
+    @media (max-width: 599px) {
+        .card-img-top {
+            max-height: 200px; /* Limit the height to 200px on smaller screens */
+        }
+    }
+
+    /* For screens between 600px and 999px */
+    @media (min-width: 600px) and (max-width: 999px) {
+        .card-img-top {
+            max-height: 400px; /* Limit the height to 400px on medium-sized screens */
+        }
+    }
+
+    /* For screens above 1000px */
+    @media (min-width: 1000px) {
+        .card-img-top {
+            max-height: 400px; /* Limit the height to 400px on larger screens */
+        }
+    }
+");
+$this->registerJsFile('@web/js/summernote.min.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 ?>
 
 <section>
@@ -38,9 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </div>
 
-                                <p class="card-text">
-                                    <?= Html::encode($blog->description) ?>
-                                </p>
+                                <div class="card-text">
+                                    <?= Html::decode($blog->description) ?> <!-- Render raw HTML -->
+                                </div>
+
                                 <div class="d-flex justify-content-end">
                                     <a href="<?= Url::to(['site/single-blog', 'id' => $blog->id]) ?>">
                                         <button class="py-2 px-4 bg-success border-0 rounded text-white">
@@ -49,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 <?php endforeach; ?>
