@@ -47,6 +47,16 @@ class Blog extends ActiveRecord
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
+    public function getAuthorName()
+    {
+        return 'John Doe';  // Return a hardcoded name, or fetch from related User model if you have one
+    }
+
+    public function getCommentsCount()
+    {
+        return 35;  // Example, you can fetch the actual count from the comments table
+    }
+
 
     /**
      * {@inheritdoc}

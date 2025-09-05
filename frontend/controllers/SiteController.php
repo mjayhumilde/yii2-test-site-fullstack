@@ -229,30 +229,10 @@ class SiteController extends Controller
 
     public function actionBlog()
     {
-        $blogs = [
-            [
-                'image' => 'https://plus.unsplash.com/premium_photo-1661265902815-162b20274c88?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmxvZyUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-                'title' => 'Lorem Ipsum Havertyu',
-                'name' => 'John Doe',
-                'date' => 'Aug, 7, 2025',
-                'comments' => '35'
-            ],
-            [
-                'image' => 'https://plus.unsplash.com/premium_photo-1683309565422-77818a287060?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmxvZyUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-                'title' => 'Eiusmod Tempor',
-                'name' => 'Jane Smith',
-                'date' => 'July, 28, 2025',
-                'comments' => '12'
-            ],
-            [
-                'image' => 'https://images.unsplash.com/photo-1706265556226-746ab25eda1f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGJsb2clMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D',
-                'title' => 'Dolor Sit Amet',
-                'name' => 'Peter Jones',
-                'date' => 'June, 15, 2025',
-                'comments' => '5'
-            ]
-        ];
+        // Fetch all blog records
+        $blogs = \common\models\Blog::find()->all();  // Fetch all blog posts
 
+        // Pass the blogs data to the view
         return $this->render('blog', ['blogs' => $blogs]);
     }
 
