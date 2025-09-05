@@ -64,7 +64,7 @@ $this->registerJsFile('@web/js/summernote.min.js', ['depends' => [\yii\web\Jquer
                                 <div class="d-flex gap-3 text-muted" style="font-size: 12px">
                                     <div>
                                         <i class="fa-solid fa-user"></i>
-                                        <span><?= 'John Doe' // Static author name 
+                                        <span><?= 'Test Site Admin' // Static author name 
                                                 ?></span>
                                     </div>
                                     <div>
@@ -82,7 +82,7 @@ $this->registerJsFile('@web/js/summernote.min.js', ['depends' => [\yii\web\Jquer
                                     <?= Html::decode($blog->description) ?> <!-- Render raw HTML -->
                                 </div>
 
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-end pt-3">
                                     <a href="<?= Url::to(['site/single-blog', 'id' => $blog->id]) ?>">
                                         <button class="py-2 px-4 bg-success border-0 rounded text-white">
                                             Read More

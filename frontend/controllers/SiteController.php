@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use frontend\models\LoginForm;
 use frontend\models\ContactForm;
+use common\models\Blog;  // Import the Blog model
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
@@ -236,9 +238,20 @@ class SiteController extends Controller
         return $this->render('blog', ['blogs' => $blogs]);
     }
 
-    public function actionSingleBlog()
+    public function actionSingleBlog($id)
     {
-        return $this->render('singleBlog');
+        // Fetch the blog post based on its ID
+        $blog = Blog::findOne($id);
+
+        // If the blog is not found, redirect or throw a 404 error
+        if (!$blog) {
+            throw new NotFoundHttpException('The requested blog post does not exist.');
+        }
+
+        // Pass the blog data to the view
+        return $this->render('singleBlog', [
+            'blog' => $blog,
+        ]);
     }
 
     public function actionRegister()
