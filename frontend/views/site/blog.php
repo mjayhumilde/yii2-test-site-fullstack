@@ -163,12 +163,18 @@ $this->registerJsFile('@web/js/summernote.min.js', ['depends' => [\yii\web\Jquer
                                     <img src="<?= Url::to('@web/' . Html::encode($blog->image_cover)) ?>" alt="Blog Image" class="w-100" />
                                 </div>
                                 <div>
-                                    <p class="m-0 fw-bold"><?= Html::encode($blog->title) ?></p>
+                                    <!-- Title behaves like Read More button -->
+                                    <p class="m-0 fw-bold">
+                                        <a href="<?= Url::to(['site/single-blog', 'id' => $blog->id]) ?>" class="text-decoration-none text-dark">
+                                            <?= Html::encode($blog->title) ?>
+                                        </a>
+                                    </p>
                                     <p class="m-0 fst-italic text-secondary"><?= Yii::$app->formatter->asDatetime($blog->created_at) ?></p>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
+
 
                     <!-- Tag Section -->
                     <div class="d-flex flex-wrap gap-2 mt-3">
