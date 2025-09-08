@@ -231,11 +231,22 @@ class SiteController extends Controller
 
     public function actionBlog()
     {
-        // Fetch all blog records
-        $blogs = \common\models\Blog::find()->all();  // Fetch all blog posts
+        // Fetch all blog posts for the main content
+        $blogs = Blog::find()
+            ->orderBy(['created_at' => SORT_DESC])
+            ->all();
 
-        // Pass the blogs data to the view
-        return $this->render('blog', ['blogs' => $blogs]);
+        // Fetch the 5 most recent blog posts for the sidebar
+        $recentBlogs = Blog::find()
+            ->orderBy(['created_at' => SORT_DESC])  // Order by created_at descending
+            ->limit(5)  // Limit to 5 posts
+            ->all();
+
+
+        return $this->render('blog', [
+            'blogs' => $blogs,
+            'recentBlogs' => $recentBlogs,
+        ]);
     }
 
     public function actionSingleBlog($id)

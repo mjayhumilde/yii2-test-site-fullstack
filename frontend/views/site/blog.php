@@ -94,7 +94,6 @@ $this->registerJsFile('@web/js/summernote.min.js', ['depends' => [\yii\web\Jquer
                         </div>
                     </div>
                 <?php endforeach; ?>
-
             </div>
 
             <div class="col col-lg-3">
@@ -102,84 +101,54 @@ $this->registerJsFile('@web/js/summernote.min.js', ['depends' => [\yii\web\Jquer
                     <h6 class="mb-3 fw-bold fs-5">Search</h6>
                     <div class="d-flex mb-4">
                         <input type="text" style="border: solid 1px rgb(220, 218, 218)" class="p-2 w-100 rounded-start" />
-                        <span class="py-2 px-4 bg-success text-white d-flex justify-content-center align-items-center rounded-end"
-                            style="width: 10%">
+                        <span class="py-2 px-4 bg-success text-white d-flex justify-content-center align-items-center rounded-end" style="width: 10%">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </span>
                     </div>
+
                     <h6 class="mb-2 fw-bold fs-5">Categories</h6>
                     <div class="mb-3">
-                        <p class="m-0">
-                            General <span class="text-muted">(25)</span>
-                        </p>
-                        <p class="m-0">
-                            Lifestyle <span class="text-muted">(12)</span>
-                        </p>
+                        <p class="m-0">General <span class="text-muted">(25)</span></p>
+                        <p class="m-0">Lifestyle <span class="text-muted">(12)</span></p>
                         <p class="m-0">Travel <span class="text-muted">(5)</span></p>
                         <p class="m-0">Design <span class="text-muted">(22)</span></p>
-                        <p class="m-0">
-                            Creative <span class="text-muted">(8)</span>
-                        </p>
-                        <p class="m-0">
-                            Education <span class="text-muted">(14)</span>
-                        </p>
+                        <p class="m-0">Creative <span class="text-muted">(8)</span></p>
+                        <p class="m-0">Education <span class="text-muted">(14)</span></p>
                     </div>
+
                     <div>
                         <h6 class="mb-3 fw-bold fs-5">Recent Post</h6>
-                        <!-- Recent Post Card -->
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
+                        <!-- Loop through the most recent posts -->
+                        <?php foreach ($recentBlogs as $blog): ?>
+                            <div class="d-flex gap-2 mb-1">
+                                <div class="w-25">
+                                    <img src="<?= Url::to('@web/' . Html::encode($blog->image_cover)) ?>" alt="Blog Image" class="w-100" />
+                                </div>
+                                <div>
+                                    <p class="m-0 fw-bold"><?= Html::encode($blog->title) ?></p>
+                                    <p class="m-0 fst-italic text-secondary"><?= Yii::$app->formatter->asDatetime($blog->created_at) ?></p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+                    </div>
 
-                        <!-- Tag -->
-                        <div class="d-flex flex-wrap gap-2 mt-3">
-                            <span class="p-2 border text-muted bg-white">App</span>
-                            <span class="p-2 border text-muted bg-white">IT</span>
-                            <span class="p-2 border text-muted bg-white">Business</span>
-                            <span class="p-2 border text-muted bg-white">Design</span>
-                            <span class="p-2 border text-muted bg-white">Office</span>
-                            <span class="p-2 border text-muted bg-white">Creative</span>
-                            <span class="p-2 border text-muted bg-white">Studio</span>
-                            <span class="p-2 border text-muted bg-white">Smart</span>
-                            <span class="p-2 border text-muted bg-white">Tips</span>
-                            <span class="p-2 border text-muted bg-white">Marketing</span>
-                        </div>
+                    <!-- Tag Section -->
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="p-2 border text-muted bg-white">App</span>
+                        <span class="p-2 border text-muted bg-white">IT</span>
+                        <span class="p-2 border text-muted bg-white">Business</span>
+                        <span class="p-2 border text-muted bg-white">Design</span>
+                        <span class="p-2 border text-muted bg-white">Office</span>
+                        <span class="p-2 border text-muted bg-white">Creative</span>
+                        <span class="p-2 border text-muted bg-white">Studio</span>
+                        <span class="p-2 border text-muted bg-white">Smart</span>
+                        <span class="p-2 border text-muted bg-white">Tips</span>
+                        <span class="p-2 border text-muted bg-white">Marketing</span>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </section>
