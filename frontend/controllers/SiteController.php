@@ -231,21 +231,42 @@ class SiteController extends Controller
 
     public function actionBlog()
     {
-        // Fetch all blog posts for the main content
-        $blogs = Blog::find()
-            ->orderBy(['created_at' => SORT_DESC])
-            ->all();
+        $searchTerm = Yii::$app->request->get('search');
 
-        // Fetch the 5 most recent blog posts for the sidebar
+        // Clean the search term
+        if ($searchTerm) {
+            $searchTerm = trim($searchTerm);
+            if (empty($searchTerm)) {
+                $searchTerm = null;
+            }
+        }
+
+        // If there's a search term, filter the blogs
+        if ($searchTerm) {
+            $searchPattern = '%' . $searchTerm . '%';
+
+            $blogs = Blog::find()
+                ->where(['like', 'title', $searchPattern, false])  // false makes it case-insensitive
+                ->orWhere(['like', 'description', $searchPattern, false])
+                ->orderBy(['created_at' => SORT_DESC])
+                ->all();
+        } else {
+            // If no search term, fetch all blogs
+            $blogs = Blog::find()
+                ->orderBy(['created_at' => SORT_DESC])
+                ->all();
+        }
+
+        // Fetch the most recent 5 blogs for the sidebar
         $recentBlogs = Blog::find()
-            ->orderBy(['created_at' => SORT_DESC])  // Order by created_at descending
-            ->limit(5)  // Limit to 5 posts
+            ->orderBy(['created_at' => SORT_DESC])
+            ->limit(5)
             ->all();
-
 
         return $this->render('blog', [
             'blogs' => $blogs,
             'recentBlogs' => $recentBlogs,
+            'searchTerm' => $searchTerm,
         ]);
     }
 
