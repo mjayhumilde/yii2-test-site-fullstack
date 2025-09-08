@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
+use frontend\models\SignupForm;
+use common\models\User;  // Add this to import the User model
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -285,6 +287,49 @@ class SiteController extends Controller
             'blog' => $blog,
         ]);
     }
+
+    /**
+     * Signs user up.
+     *
+     * @return mixed
+     */
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+
+        // Check if the form was submitted and is valid
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            // If signup is successful, redirect to the home page or send a flash message
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->goHome();
+        }
+
+        // Render the signup form if not submitted or has validation errors
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionVerifyEmail($token)
+    {
+        $user = User::findOne(['verification_token' => $token]);
+
+        if (!$user || !$user->validateEmailVerificationToken($token)) {
+            Yii::$app->session->setFlash('error', 'Invalid or expired verification token.');
+            return $this->goHome();
+        }
+
+        $user->status = User::STATUS_ACTIVE;  // Mark the email as verified
+        $user->verification_token = null;  // Clear the verification token
+        if (!$user->save()) {
+            Yii::$app->session->setFlash('error', 'There was an issue confirming your email. Please try again later.');
+        }
+
+        Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+        return $this->goHome();
+    }
+
+
 
     public function actionRegister()
     {

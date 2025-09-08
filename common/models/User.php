@@ -211,4 +211,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function validateEmailVerificationToken($token)
+    {
+        // Compare the provided token with the one stored in the database
+        return $this->verification_token === $token;
+    }
 }
