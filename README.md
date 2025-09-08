@@ -162,7 +162,40 @@ Add to your `C:\Windows\System32\drivers\etc\hosts` file:
 127.0.0.1 admin.testsite.local
 ```
 
-### **8. Access the Application**
+### **8. Create Admin Account**
+
+To access the backend admin panel, follow these steps to create and verify an admin account:
+
+#### Step 1: Create Account via Frontend
+1. Go to `http://localhost/your-project-name/frontend/web/site/signup` (or `http://testsite.local/site/signup` if using virtual hosts)
+2. Fill out the signup form with your desired admin credentials
+3. Submit the form
+
+#### Step 2: Get Verification Token
+1. Navigate to your project directory and go to `frontend/runtime/email/`
+2. Find the verification email file (usually the latest .eml file)
+3. Open the email file and look for the verification URL
+4. Copy the `verification_token` parameter from the URL
+
+#### Step 3: Update Token in Database
+1. Open **phpMyAdmin** and navigate to your database
+2. Go to the `user` table
+3. Find your newly created user account
+4. Copy the `verification_token` value from the database
+
+#### Step 4: Verify Account
+1. Take the verification URL from the email file
+2. Remove any special characters that might have been added
+3. Replace the token in the URL with the `verification_token` from the database
+4. Paste the corrected URL in your browser and access it
+5. Your account should now be verified and activated
+
+#### Step 5: Access Admin Panel
+1. Go to `http://localhost/your-project-name/backend/web` (or `http://admin.testsite.local` if using virtual hosts)
+2. Login with the credentials you created during signup
+3. You can now start creating blogs and portfolio projects that will be displayed on the frontend
+
+### **9. Access the Application**
 
 #### Without Virtual Hosts:
 - **Frontend:** `http://localhost/your-project-name/frontend/web`
@@ -171,16 +204,6 @@ Add to your `C:\Windows\System32\drivers\etc\hosts` file:
 #### With Virtual Hosts:
 - **Frontend:** `http://testsite.local`
 - **Backend (Admin):** `http://admin.testsite.local`
-
-### **9. Create Admin User (Optional)**
-
-To access the admin panel, you may need to create an admin user. You can do this through the Yii2 console:
-
-```bash
-php yii user/create-admin
-```
-
-Or create a user directly in the database with appropriate permissions.
 
 ---
 
@@ -221,6 +244,9 @@ yii2-test-site-fullstack/
 2. **Composer Dependencies:** Run `composer install` if you encounter missing class errors
 3. **Permissions:** Ensure proper file permissions for web directories
 4. **Search Not Working:** Verify you're using MySQL/MariaDB compatible syntax (not PostgreSQL)
+5. **Email Verification Issues:** Make sure the `frontend/runtime/email/` directory has proper write permissions
+6. **Admin Access Problems:** Double-check that the verification token matches exactly between the email file and database
+7. **Security Concern:** Remember that all verified users currently have admin access because im only 1 month as an intern and have a very short amount of time studying there techstack
 
 ### For Additional Help:
 - Check Yii2 documentation: https://www.yiiframework.com/doc/guide/2.0/en
