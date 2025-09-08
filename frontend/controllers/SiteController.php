@@ -282,9 +282,16 @@ class SiteController extends Controller
             throw new NotFoundHttpException('The requested blog post does not exist.');
         }
 
-        // Pass the blog data to the view
+        // Fetch the most recent 5 blogs for the sidebar
+        $recentBlogs = Blog::find()
+            ->orderBy(['created_at' => SORT_DESC])
+            ->limit(5)
+            ->all();
+
+        // Pass the blog data and recent blogs to the view
         return $this->render('singleBlog', [
             'blog' => $blog,
+            'recentBlogs' => $recentBlogs,
         ]);
     }
 

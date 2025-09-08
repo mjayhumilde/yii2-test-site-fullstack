@@ -9,6 +9,13 @@ use yii\helpers\Url;
 $this->title = Html::encode($blog->title); // Set the page title to the blog title
 $this->params['breadcrumbs'][] = ['label' => 'Blog', 'url' => ['site/blog']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCss("
+    .card-text img {
+        max-width: 100%;  /* Ensures the image fits within the container */
+        height: auto;     /* Keeps the aspect ratio intact */
+        object-fit: contain;  /* Prevents image overflow */
+    }
+");
 ?>
 
 <section class="mt-5">
@@ -23,8 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="d-flex gap-3 text-muted" style="font-size: 12px">
                                 <div>
                                     <i class="fa-solid fa-user"></i>
-                                    <span><?= 'John Doe' // Static author name 
-                                            ?></span>
+                                    <span><?= 'John Doe' ?></span> <!-- Static Author -->
                                 </div>
                                 <div>
                                     <i class="fa-regular fa-clock"></i>
@@ -37,12 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                             </div>
 
-                            <!-- Blog content -->
                             <div class="card-text">
-                                <?= Html::decode($blog->description) ?> <!-- Render the full blog content here -->
+                                <?= Html::decode($blog->description) ?> <!-- Full content -->
                             </div>
 
-                            <!-- Comment section (static) -->
+                            <!-- Comments Section -->
                             <div class="mt-4">
                                 <h5>Comments</h5>
                                 <article class="comment-card d-flex gap-3 mb-4">
@@ -93,95 +98,52 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="shadow w-100 w-lg-75 p-4">
                     <h6 class="mb-3 fw-bold fs-5">Search</h6>
                     <div class="d-flex mb-4">
-                        <input type="text" style="border: solid 1px rgb(220, 218, 218)" class="p-2 w-100 rounded-start" />
-                        <span class="py-2 px-4 bg-success text-white d-flex justify-content-center align-items-center rounded-end"
-                            style="width: 10%">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </span>
+                        <?= Html::beginForm(['site/blog'], 'get', ['class' => 'w-100 d-flex', 'id' => 'search-form']) ?>
+                        <?= Html::textInput('search', '', [
+                            'style' => 'border: solid 1px rgb(220, 218, 218);',
+                            'class' => 'p-2 w-75 rounded-start',
+                            'placeholder' => 'Search blogs...'
+                        ]) ?>
+                        <?= Html::submitButton('<i class="fa-solid fa-magnifying-glass"></i>', [
+                            'class' => 'py-2 px-4 bg-success text-white d-flex justify-content-center align-items-center rounded-end w-25 border-0',
+                            'style' => 'border-radius: 0;',
+                            'id' => 'search-btn'
+                        ]) ?>
+                        <?= Html::endForm() ?>
                     </div>
-                    <h6 class="mb-2 fw-bold fs-5">Categories</h6>
-                    <div class="mb-3">
-                        <p class="m-0">
-                            General <span class="text-muted">(25)</span>
-                        </p>
-                        <p class="m-0">
-                            Lifestyle <span class="text-muted">(12)</span>
-                        </p>
-                        <p class="m-0">Travel <span class="text-muted">(5)</span></p>
-                        <p class="m-0">Design <span class="text-muted">(22)</span></p>
-                        <p class="m-0">
-                            Creative <span class="text-muted">(8)</span>
-                        </p>
-                        <p class="m-0">
-                            Education <span class="text-muted">(14)</span>
-                        </p>
-                    </div>
-                    <div>
-                        <h6 class="mb-3 fw-bold fs-5">Recent Post</h6>
-                        <!-- Recent Post Card -->
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-1">
-                            <div class="w-25">
-                                <img src="https://spaces-cdn.clipsafari.com/fonc3iaqjfz274m12cl81e9ottfv" alt="" class="w-100" />
-                            </div>
-                            <div>
-                                <p class="m-0 fw-bold">blah blah</p>
-                                <p class="m-0 fst-italic text-secondary">jan, 1,20025</p>
-                            </div>
-                        </div>
 
-                        <!-- Tag -->
-                        <div class="d-flex flex-wrap gap-2 mt-3">
-                            <span class="p-2 border text-muted bg-white">App</span>
-                            <span class="p-2 border text-muted bg-white">IT</span>
-                            <span class="p-2 border text-muted bg-white">Business</span>
-                            <span class="p-2 border text-muted bg-white">Design</span>
-                            <span class="p-2 border text-muted bg-white">Office</span>
-                            <span class="p-2 border text-muted bg-white">Creative</span>
-                            <span class="p-2 border text-muted bg-white">Studio</span>
-                            <span class="p-2 border text-muted bg-white">Smart</span>
-                            <span class="p-2 border text-muted bg-white">Tips</span>
-                            <span class="p-2 border text-muted bg-white">Marketing</span>
+                    <h6 class="mb-3 fw-bold fs-5">Recent Posts</h6>
+                    <?php foreach ($recentBlogs as $blog): ?>
+                        <div class="d-flex gap-2 mb-1">
+                            <div class="w-25">
+                                <img src="<?= Url::to('@web/' . Html::encode($blog->image_cover)) ?>" alt="Blog Image" class="w-100" />
+                            </div>
+                            <div>
+                                <p class="m-0 fw-bold">
+                                    <a href="<?= Url::to(['site/single-blog', 'id' => $blog->id]) ?>" class="text-decoration-none text-dark">
+                                        <?= Html::encode($blog->title) ?>
+                                    </a>
+                                </p>
+                                <p class="m-0 fst-italic text-secondary"><?= Yii::$app->formatter->asDatetime($blog->created_at) ?></p>
+                            </div>
                         </div>
+                    <?php endforeach; ?>
+
+                    <!-- Tag Section -->
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="p-2 border text-muted bg-white">App</span>
+                        <span class="p-2 border text-muted bg-white">IT</span>
+                        <span class="p-2 border text-muted bg-white">Business</span>
+                        <span class="p-2 border text-muted bg-white">Design</span>
+                        <span class="p-2 border text-muted bg-white">Office</span>
+                        <span class="p-2 border text-muted bg-white">Creative</span>
+                        <span class="p-2 border text-muted bg-white">Studio</span>
+                        <span class="p-2 border text-muted bg-white">Smart</span>
+                        <span class="p-2 border text-muted bg-white">Tips</span>
+                        <span class="p-2 border text-muted bg-white">Marketing</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<?php
-$this->registerCss("
-    .card-text img {
-        max-width: 100%;
-        height: auto;
-        object-fit: contain; /* Ensures that the image stays within the bounds */
-    }
-");
-?>
